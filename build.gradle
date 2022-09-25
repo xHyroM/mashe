@@ -33,8 +33,12 @@ test {
 
 publishing {
     publications {
-        create("default") {
-            from(components["java"])
+        maven(MavenPublication) {
+            groupId = 'hyro.mashe'
+            artifactId = 'mashe'
+            version = '0.1.0'
+
+            from components.java
         }
     }
 
