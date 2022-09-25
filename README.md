@@ -57,13 +57,15 @@ class ExampleEvent extends Event {
 </distributionManagement>
 
 <dependency>
-    <groupId>com.xhyrom</groupId>
+    <groupId>xhyrom.packages</groupId>
     <artifactId>mashe</artifactId>
     <version>0.1.0</version>
 </dependency>
 ```
 
 ### Gradle
+
+#### Groovy
 
 ```groovy
 repositories {
@@ -73,9 +75,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.xhyrom:mashe:0.1.0'
+    implementation 'xhyrom.packages:mashe:0.1.0'
 }
 ```
+
+#### Kotlin
 
 ```kotlin
 repositories {
@@ -85,6 +89,6 @@ repositories {
 }
 
 dependencies {
-    implementation("com.xhyrom:mashe:0.1.0")
+    implementation("xhyrom.packages:mashe:0.1.0")
 }
 ```
