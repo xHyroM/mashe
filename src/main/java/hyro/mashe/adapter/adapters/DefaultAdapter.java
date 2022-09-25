@@ -45,15 +45,15 @@ public final class DefaultAdapter implements Adapter {
     }
 
     @Override
-    public void fire(final Event o) {
-        if (!this.list.containsKey(o.getClass())) return;
+    public void fire(final Event event) {
+        if (!this.list.containsKey(event.getClass())) return;
 
-        this.list.get(o.getClass()).forEach(e -> {
+        for (Data data : this.list.get(event.getClass())) {
             try {
-                e.getMethod().invoke(e.getInstance(), o);
+                data.getMethod().invoke(data.getInstance(), event);
             } catch (IllegalAccessException | InvocationTargetException ex) {
                 throw new RuntimeException(ex);
             }
-        });
+        }
     }
 }
