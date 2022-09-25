@@ -1,7 +1,7 @@
 package hyro.mashe.types;
 
 import hyro.mashe.Mashe;
-import hyro.mashe.priority.Priority;
+import hyro.mashe.enums.Priority;
 
 import java.util.function.Consumer;
 

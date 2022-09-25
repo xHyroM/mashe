@@ -3,13 +3,13 @@ package hyro.mashe.adapter.adapters;
 import hyro.mashe.types.Event;
 import hyro.mashe.adapter.Adapter;
 import hyro.mashe.adapter.Data;
-import hyro.mashe.priority.Priority;
-import hyro.mashe.priority.PriorityComparator;
+import hyro.mashe.enums.Priority;
 import org.eclipse.collections.impl.list.mutable.FastList;
 import org.eclipse.collections.impl.map.mutable.UnifiedMap;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Comparator;
 
 /**
  * Adapter that uses Eclipse Collections
@@ -40,7 +40,7 @@ public final class EclipseCollectionsAdapter implements Adapter {
     @Override
     public void sort() {
         for (FastList<Data> list : this.list.values()) {
-            list.sort(new PriorityComparator());
+            list.sort(Comparator.<Data>comparingInt(o -> o.getPriority().getSlot()).reversed());
         }
     }
 

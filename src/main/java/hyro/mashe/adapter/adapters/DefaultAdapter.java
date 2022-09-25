@@ -3,12 +3,12 @@ package hyro.mashe.adapter.adapters;
 import hyro.mashe.types.Event;
 import hyro.mashe.adapter.Adapter;
 import hyro.mashe.adapter.Data;
-import hyro.mashe.priority.Priority;
-import hyro.mashe.priority.PriorityComparator;
+import hyro.mashe.enums.Priority;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -40,7 +40,7 @@ public final class DefaultAdapter implements Adapter {
     @Override
     public void sort() {
         for (ArrayList<Data> list : this.list.values()) {
-            list.sort(new PriorityComparator());
+            list.sort(Comparator.<Data>comparingInt(o -> o.getPriority().getSlot()).reversed());
         }
     }
 

@@ -1,7 +1,7 @@
 package hyro.mashe.adapter;
 
 import hyro.mashe.types.Event;
-import hyro.mashe.priority.Priority;
+import hyro.mashe.enums.Priority;
 
 import java.lang.reflect.Method;
 

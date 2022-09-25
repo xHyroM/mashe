@@ -1,6 +1,6 @@
 package hyro.mashe.adapter;
 
-import hyro.mashe.priority.Priority;
+import hyro.mashe.enums.Priority;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

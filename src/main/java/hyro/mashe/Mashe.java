@@ -3,7 +3,7 @@ package hyro.mashe;
 import hyro.mashe.adapter.Adapter;
 import hyro.mashe.adapter.adapters.DefaultAdapter;
 import hyro.mashe.annotations.Listen;
-import hyro.mashe.priority.Priority;
+import hyro.mashe.enums.Priority;
 import hyro.mashe.types.Event;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package hyro.mashe.priority;
+package hyro.mashe.enums;
 
 import lombok.Getter;
 
