@@ -4,10 +4,12 @@ import hyro.mashe.annotations.Listen;
 import hyro.mashe.events.TestEvent;
 
 public class TestMashe {
+    public Mashe mashe;
     public TestMashe() {
-        new Mashe().register(this);
+        mashe = new Mashe();
+        mashe.register(this);
 
-        Mashe.getInstance().fire(new TestEvent());
+        mashe.fire(new TestEvent());
     }
 
     @Listen

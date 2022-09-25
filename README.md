@@ -10,26 +10,27 @@ import hyro.mashe.types.Event;
 import hyro.mashe.annotations.Listen;
 
 public class Example {
+    public Mashe mashe;
     public static void main(String[] args) {
         // Create a new mashe
-        new Mashe();
+        mashe = new Mashe();
         
         // Register a listener (you can also use annotations)
-        Mashe.getInstance().register(ExampleEvent.class, (event) -> {
+        mashe.register(ExampleEvent.class, (event) -> {
             System.out.println("Hello World!");
         });
 
         // Register events with Listener annotation
-        new ExampleV2().start();
+        new ExampleV2().start(mashe);
         
         // Post an event
-        Mashe.getInstance().fire(new ExampleEvent());
+        mashe.fire(new ExampleEvent());
     }
 }
 
 class ExampleV2 {
-    public void start() {
-        Mashe.getInstance().register(this);
+    public void start(Mashe mashe) {
+        mashe.register(this);
     }
 
     @Listen
