@@ -17,14 +17,14 @@ import java.util.Comparator;
  * @since 0.1.0
  */
 public final class EclipseCollectionsAdapter implements Adapter {
-    private final UnifiedMap<Class<? extends Event>, FastList<Data>> list = new UnifiedMap<>();
+    private final UnifiedMap<Class<?>, FastList<Data>> list = new UnifiedMap<>();
 
     @Override
     public void register(
             final Object object,
-            final Class<? extends Event> o,
+            final Class<?> o,
             final Method method,
-            Priority priority
+            final Priority priority
     ) {
         if (list.containsKey(o)) {
             list.get(o).add(new Data(method, object, priority));

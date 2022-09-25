@@ -108,7 +108,7 @@ public final class Mashe {
 
             method.setAccessible(true);
 
-            getAdapter().register(object, (Class<? extends Event>) parameterTypes[0], method, info.priority());
+            getAdapter().register(object, parameterTypes[0], method, info.priority());
         }
     }
 

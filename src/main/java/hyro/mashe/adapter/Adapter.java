@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 public interface Adapter {
     void register(
             final Object object,
-            final Class<? extends Event> parameter,
+            final Class<?> parameter,
             final Method method,
             final Priority priority
     );

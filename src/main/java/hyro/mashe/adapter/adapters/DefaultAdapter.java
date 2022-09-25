@@ -17,14 +17,14 @@ import java.util.HashMap;
  * @since 0.1.0
  */
 public final class DefaultAdapter implements Adapter {
-    private final HashMap<Class<? extends Event>, ArrayList<Data>> list = new HashMap<>();
+    private final HashMap<Class<?>, ArrayList<Data>> list = new HashMap<>();
 
     @Override
     public void register(
             final Object object,
-            final Class<? extends Event> parameter,
+            final Class<?> parameter,
             final Method method,
-            Priority priority
+            final Priority priority
     ) {
         if (this.list.containsKey(parameter)) {
             this.list.get(parameter).add(new Data(method, object, priority));
