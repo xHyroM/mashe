@@ -14,6 +14,14 @@ import java.lang.reflect.Method;
  * @since 0.1.0
  */
 public interface Adapter {
+    /**
+     * Implementation for registering event
+     *
+     * @param object class with method
+     * @param parameter main parameter - {@link Event}
+     * @param method {@link Method}
+     * @param priority {@link Priority}
+     */
     void register(
             final Object object,
             final Class<?> parameter,
@@ -21,9 +29,17 @@ public interface Adapter {
             final Priority priority
     );
 
+    /**
+     * Implementation for sorting events by priority
+     */
     default void sort() {
         // Function for sorting - not required
     }
 
-    void fire(final Event o);
+    /**
+     * Implementation for firing event
+     *
+     * @param event {@link Event}
+     */
+    void fire(final Event event);
 }

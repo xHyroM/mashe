@@ -10,9 +10,11 @@ import java.lang.reflect.Method;
  * Record for Adapter's storage
  * <p>
  * Includes:
+ * <ol>
  * <li>{@link #method}</li>
  * <li>{@link #instance}</li>
  * <li>{@link #priority}</li>
+ * </ol>
  *
  * @author <a href="https://github.com/xHyroM">xHyroM</a>
  * @since 0.1.0

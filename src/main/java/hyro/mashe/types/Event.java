@@ -17,6 +17,13 @@ import java.util.function.Consumer;
  * @since 0.1.0
  */
 public abstract class Event {
+    /**
+     * Convenience method for providing a user-friendly identifier. By
+     * default, it is the event's class's {@link Class#getSimpleName()
+     * simple name}.
+     *
+     * @return event's name
+     */
     public final String getEventName() {
         return getClass().getSimpleName();
     }

@@ -6,12 +6,14 @@ import lombok.Getter;
  * Represents an event's priority in execution
  * <p>
  * Includes:
+ * <ol>
  * <li>{@link #LOWEST}</li>
  * <li>{@link #LOW}</li>
  * <li>{@link #NORMAL}</li>
  * <li>{@link #HIGH}</li>
  * <li>{@link #HIGHEST}</li>
  * <li>{@link #MONITOR}</li>
+ * </ol>
  *
  * @author <a href="https://github.com/xHyroM">xHyroM</a>
  * @since 0.1.0
