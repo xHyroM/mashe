@@ -17,9 +17,6 @@ import java.util.function.Consumer;
  */
 public final class Mashe {
     @Getter
-    private static Mashe instance;
-
-    @Getter
     @Setter
     private Adapter adapter;
 
@@ -33,8 +30,6 @@ public final class Mashe {
      * @see #Mashe(Adapter)
      */
     public Mashe() {
-        instance = this;
-
         try {
             Class.forName("org.eclipse.collections.api.factory.Maps");
             setAdapter(((Adapter) Class.forName("hyro.mashe.adapter.adapters.EclipseCollectionsAdapter").getDeclaredConstructor().newInstance()));
@@ -50,8 +45,6 @@ public final class Mashe {
      * @see #Mashe()
      */
     public Mashe(Adapter adapter) {
-        instance = this;
-
         setAdapter(adapter);
     }
 
