@@ -32,6 +32,12 @@ test {
 }
 
 publishing {
+    publications {
+        create("default") {
+            from(components["java"])
+        }
+    }
+
     repositories {
         maven {
             name = "GitHubPackages"
