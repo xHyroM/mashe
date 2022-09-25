@@ -34,7 +34,7 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'hyro.mashe'
+            groupId = 'xhyrom.packages'
             artifactId = 'mashe'
             version = '0.1.0'
 
