@@ -58,9 +58,9 @@ With [jitpack](https://jitpack.io/#xHyroM/mashe)
 </repositories>
 
 <dependency>
-<groupId>com.github.xHyroM</groupId>
-<artifactId>mashe</artifactId>
-<version>v0.1.1</version>
+    <groupId>com.github.xHyroM</groupId>
+    <artifactId>mashe</artifactId>
+    <version>v0.1.1</version>
 </dependency>
 ```
 
