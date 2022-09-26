@@ -30,5 +30,5 @@ public @interface Listen {
      *
      * @return the priority of the event
      */
-    Priority priority() default Priority.LOW;
+    Priority priority() default Priority.NORMAL;
 }
