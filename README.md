@@ -27,7 +27,7 @@ public class Example {
     }
 }
 
-class ExampleV2 {
+public class ExampleV2 {
     public void start(Mashe mashe) {
         mashe.register(this);
     }
@@ -38,7 +38,7 @@ class ExampleV2 {
     }
 }
 
-class ExampleEvent extends Event {
+public class ExampleEvent extends Event {
     // ...
 }
 ```
