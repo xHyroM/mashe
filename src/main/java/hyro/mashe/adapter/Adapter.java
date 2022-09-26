@@ -2,6 +2,7 @@ package hyro.mashe.adapter;
 
 import hyro.mashe.types.Event;
 import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Listener;
 
 import java.lang.reflect.Method;
 
@@ -17,15 +18,13 @@ public interface Adapter {
     /**
      * Implementation for registering event
      *
-     * @param object class with method
      * @param parameter main parameter - {@link Event}
-     * @param method {@link Method}
+     * @param listener {@link Listener}
      * @param priority {@link Priority}
      */
     void register(
-            final Object object,
             final Class<?> parameter,
-            final Method method,
+            final Listener listener,
             final Priority priority
     );
 

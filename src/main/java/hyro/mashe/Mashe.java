@@ -5,10 +5,13 @@ import hyro.mashe.adapter.adapters.DefaultAdapter;
 import hyro.mashe.annotations.Listen;
 import hyro.mashe.enums.Priority;
 import hyro.mashe.types.Event;
+import hyro.mashe.types.Listener;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.lang.invoke.*;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
 
 /**
@@ -19,6 +22,12 @@ public final class Mashe {
     @Getter
     @Setter
     private Adapter adapter;
+    @Getter
+    @Setter
+    private Consumer<String> logger;
+
+    private static final MethodHandles.Lookup LOOKUP = MethodHandles.lookup();
+    private static final MethodType LISTENER_INVOKE_TYPE = MethodType.methodType(void.class, Event.class);
 
     /**
      * Create Mashe
@@ -26,16 +35,23 @@ public final class Mashe {
      * If you have Eclipse Collections installed, it will use {@link hyro.mashe.adapter.adapters.EclipseCollectionsAdapter}
      * <p>
      * otherwise it use {@link DefaultAdapter}
+     * <p>
+     * For logging, it uses {@link System#out}
      *
      * @see #Mashe(Adapter)
+     * @see #Mashe(Adapter, Consumer)
      */
     public Mashe() {
         try {
             Class.forName("org.eclipse.collections.api.factory.Maps");
-            setAdapter(((Adapter) Class.forName("hyro.mashe.adapter.adapters.EclipseCollectionsAdapter").getDeclaredConstructor().newInstance()));
+            setAdapter(
+                    ((Adapter) Class.forName("hyro.mashe.adapter.adapters.EclipseCollectionsAdapter").getDeclaredConstructor().newInstance())
+            );
         } catch (Exception ignored) {
             setAdapter(new DefaultAdapter());
         }
+
+        setLogger(System.out::println);
     }
 
     /**
@@ -43,9 +59,24 @@ public final class Mashe {
      *
      * @param adapter {@link Adapter}
      * @see #Mashe()
+     * @see #Mashe(Adapter, Consumer)
      */
     public Mashe(Adapter adapter) {
         setAdapter(adapter);
+        setLogger(System.out::println);
+    }
+
+    /**
+     * Create Mashe with specific adapter and logger
+     *
+     * @param adapter {@link Adapter}
+     * @param logger {@link Consumer}
+     * @see #Mashe()
+     * @see #Mashe(Adapter)
+     */
+    public Mashe(Adapter adapter, Consumer<String> logger) {
+        setAdapter(adapter);
+        setLogger(logger);
     }
 
     /**
@@ -69,35 +100,37 @@ public final class Mashe {
      * @see #register(Class, Consumer)
      * @see #register(Object)
      */
+    @SuppressWarnings("unchecked") // We know that it's safe
     public<T extends Event> void register(Class<T> object, Priority priority, Consumer<T> consumer) {
-        try {
-            Method method = consumer.getClass().getDeclaredMethod("accept", Object.class);
-            method.setAccessible(true);
-
-            getAdapter().register(
-                    consumer,
-                    object,
-                    method,
-                    priority
-            );
-        } catch (NoSuchMethodException ignored) {
-            // TODO: message
-        }
+        getAdapter().register(
+                object,
+                event -> consumer.accept((T) event),
+                priority
+        );
     }
 
     /**
      * Register all methods in class with Listen annotation as event handlers
-     * @param object your class
+     * @param subscriber your class
      *
      * @see #register(Class, Consumer)
      * @see #register(Class, Priority, Consumer)
      */
-    public void register(Object object) {
-        for (Method method : object.getClass().getDeclaredMethods()) {
+    public void register(Object subscriber) {
+        MethodType factoryType = MethodType.methodType(Listener.class, subscriber.getClass());
+        if (!Modifier.isPublic(subscriber.getClass().getModifiers())) {
+            System.out.println(String.format("ERROR: %s: Class must be public or you can use Mashe#register(class, consumer).",
+                    subscriber.getClass().getSimpleName()));
+            return;
+        }
+
+        for (Method method : subscriber.getClass().getDeclaredMethods()) {
             if (!method.isAnnotationPresent(Listen.class)) {
                 // TODO: message
                 continue;
             };
+
+            // TODO: add checks
 
             Listen info = method.getAnnotation(Listen.class);
 
@@ -106,9 +139,23 @@ public final class Mashe {
                 continue;
             }
 
-            method.setAccessible(true);
+            try {
+                MethodHandle handle = MethodHandles.lookup().unreflect(method);
+                CallSite site = LambdaMetafactory.metafactory(
+                        LOOKUP,
+                        "invoke",
+                        factoryType,
+                        LISTENER_INVOKE_TYPE,
+                        handle,
+                        MethodType.methodType(void.class, parameterTypes[0])
+                );
 
-            getAdapter().register(object, parameterTypes[0], method, info.priority());
+                Listener listener = (Listener) site.getTarget().invoke(subscriber);
+
+                getAdapter().register(parameterTypes[0], listener, info.priority());
+            } catch (Throwable e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

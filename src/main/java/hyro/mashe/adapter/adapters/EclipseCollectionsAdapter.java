@@ -4,6 +4,7 @@ import hyro.mashe.types.Event;
 import hyro.mashe.adapter.Adapter;
 import hyro.mashe.adapter.Data;
 import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Listener;
 import org.eclipse.collections.impl.list.mutable.FastList;
 import org.eclipse.collections.impl.map.mutable.UnifiedMap;
 
@@ -21,17 +22,16 @@ public final class EclipseCollectionsAdapter implements Adapter {
 
     @Override
     public void register(
-            final Object object,
-            final Class<?> o,
-            final Method method,
+            final Class<?> parameter,
+            final Listener listener,
             final Priority priority
     ) {
-        if (list.containsKey(o)) {
-            list.get(o).add(new Data(method, object, priority));
+        if (list.containsKey(parameter)) {
+            list.get(parameter).add(new Data(listener, priority));
         } else {
             FastList<Data> methods = new FastList<>();
-            methods.add(new Data(method, object, priority));
-            list.put(o, methods);
+            methods.add(new Data(listener, priority));
+            list.put(parameter, methods);
         }
 
         this.sort();
@@ -50,11 +50,7 @@ public final class EclipseCollectionsAdapter implements Adapter {
         if (datas == null) return;
 
         for (Data data : datas) {
-            try {
-                data.getMethod().invoke(data.getInstance(), event);
-            } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new RuntimeException(ex);
-            }
+            data.getListener().invoke(event);
         }
     }
 }

@@ -5,6 +5,6 @@ package hyro.mashe.types;
  * @since 0.1.0
  */
 @FunctionalInterface
-public interface Listener<Event> {
+public interface Listener {
     void invoke(Event event);
 }

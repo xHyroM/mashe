@@ -4,6 +4,7 @@ import hyro.mashe.types.Event;
 import hyro.mashe.adapter.Adapter;
 import hyro.mashe.adapter.Data;
 import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Listener;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -21,16 +22,15 @@ public final class DefaultAdapter implements Adapter {
 
     @Override
     public void register(
-            final Object object,
             final Class<?> parameter,
-            final Method method,
+            final Listener listener,
             final Priority priority
     ) {
         if (this.list.containsKey(parameter)) {
-            this.list.get(parameter).add(new Data(method, object, priority));
+            this.list.get(parameter).add(new Data(listener, priority));
         } else {
             ArrayList<Data> methods = new ArrayList<>();
-            methods.add(new Data(method, object, priority));
+            methods.add(new Data(listener, priority));
             this.list.put(parameter, methods);
         }
 
@@ -50,11 +50,7 @@ public final class DefaultAdapter implements Adapter {
         if (datas == null) return;
 
         for (Data data : datas) {
-            try {
-                data.getMethod().invoke(data.getInstance(), event);
-            } catch (IllegalAccessException | InvocationTargetException ex) {
-                throw new RuntimeException(ex);
-            }
+            data.getListener().invoke(event);
         }
     }
 }

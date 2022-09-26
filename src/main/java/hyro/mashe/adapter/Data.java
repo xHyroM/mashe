@@ -1,6 +1,7 @@
 package hyro.mashe.adapter;
 
 import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Listener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,8 +12,7 @@ import java.lang.reflect.Method;
  * <p>
  * Includes:
  * <ol>
- * <li>{@link #method}</li>
- * <li>{@link #instance}</li>
+ * <li>{@link #listener}</li>
  * <li>{@link #priority}</li>
  * </ol>
  *
@@ -22,7 +22,6 @@ import java.lang.reflect.Method;
 @AllArgsConstructor
 @Getter
 public final class Data {
-    private final Method method;
-    private final Object instance;
+    private final Listener listener;
     private final Priority priority;
 }
