@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id "me.champeau.jmh" version '0.6.6'
 }
 
 group 'hyro.mashe'
@@ -17,6 +18,9 @@ java {
 }
 
 dependencies {
+    jmh 'org.openjdk.jmh:jmh-core:1.35'
+    jmh 'org.openjdk.jmh:jmh-generator-annprocess:1.35'
+
     signingImplementation 'org.eclipse.collections:eclipse-collections-api:11.1.0'
     signingImplementation 'org.eclipse.collections:eclipse-collections:11.1.0'
 

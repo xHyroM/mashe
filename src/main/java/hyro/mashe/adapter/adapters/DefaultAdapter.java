@@ -6,8 +6,6 @@ import hyro.mashe.adapter.Data;
 import hyro.mashe.enums.Priority;
 import hyro.mashe.types.Listener;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -26,13 +24,7 @@ public final class DefaultAdapter implements Adapter {
             final Listener listener,
             final Priority priority
     ) {
-        if (this.list.containsKey(parameter)) {
-            this.list.get(parameter).add(new Data(listener, priority));
-        } else {
-            ArrayList<Data> methods = new ArrayList<>();
-            methods.add(new Data(listener, priority));
-            this.list.put(parameter, methods);
-        }
+        list.computeIfAbsent(parameter, k -> new ArrayList<>()).add(new Data(listener, priority));
 
         this.sort();
     }

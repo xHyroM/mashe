@@ -8,8 +8,6 @@ import hyro.mashe.types.Listener;
 import org.eclipse.collections.impl.list.mutable.FastList;
 import org.eclipse.collections.impl.map.mutable.UnifiedMap;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Comparator;
 
 /**
@@ -26,13 +24,7 @@ public final class EclipseCollectionsAdapter implements Adapter {
             final Listener listener,
             final Priority priority
     ) {
-        if (list.containsKey(parameter)) {
-            list.get(parameter).add(new Data(listener, priority));
-        } else {
-            FastList<Data> methods = new FastList<>();
-            methods.add(new Data(listener, priority));
-            list.put(parameter, methods);
-        }
+        list.computeIfAbsent(parameter, k -> new FastList<>()).add(new Data(listener, priority));
 
         this.sort();
     }
