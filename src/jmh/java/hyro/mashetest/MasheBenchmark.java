@@ -1,4 +1,4 @@
-package hyro.mashe;
+package hyro.mashetest;
 
 import org.openjdk.jmh.annotations.*;
 

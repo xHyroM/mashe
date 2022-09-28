@@ -1,11 +1,11 @@
-package hyro.mashe;
+package hyro.mashetest;
 
-import hyro.mashe.adapter.Adapter;
-import hyro.mashe.adapter.adapters.DefaultAdapter;
-import hyro.mashe.annotations.Listen;
-import hyro.mashe.enums.Priority;
-import hyro.mashe.types.Event;
-import hyro.mashe.types.Listener;
+import hyro.mashetest.adapter.Adapter;
+import hyro.mashetest.adapter.adapters.DefaultAdapter;
+import hyro.mashetest.annotations.Listen;
+import hyro.mashetest.enums.Priority;
+import hyro.mashetest.types.Event;
+import hyro.mashetest.types.Listener;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +32,7 @@ public final class Mashe {
     /**
      * Create Mashe
      * <p></p>
-     * If you have Eclipse Collections installed, it will use {@link hyro.mashe.adapter.adapters.EclipseCollectionsAdapter}
+     * If you have Eclipse Collections installed, it will use {@link hyro.mashetest.adapter.adapters.EclipseCollectionsAdapter}
      * <p>
      * otherwise it use {@link DefaultAdapter}
      * <p>
@@ -40,12 +40,13 @@ public final class Mashe {
      *
      * @see #Mashe(Adapter)
      * @see #Mashe(Adapter, Consumer)
+     * @since 0.1.0
      */
     public Mashe() {
         try {
             Class.forName("org.eclipse.collections.api.factory.Maps");
             setAdapter(
-                    ((Adapter) Class.forName("hyro.mashe.adapter.adapters.EclipseCollectionsAdapter").getDeclaredConstructor().newInstance())
+                    ((Adapter) Class.forName("hyro.mashetest.adapter.adapters.EclipseCollectionsAdapter").getDeclaredConstructor().newInstance())
             );
         } catch (Exception ignored) {
             setAdapter(new DefaultAdapter());
@@ -60,6 +61,7 @@ public final class Mashe {
      * @param adapter {@link Adapter}
      * @see #Mashe()
      * @see #Mashe(Adapter, Consumer)
+     * @since 0.1.0
      */
     public Mashe(Adapter adapter) {
         setAdapter(adapter);
@@ -73,6 +75,7 @@ public final class Mashe {
      * @param logger {@link Consumer}
      * @see #Mashe()
      * @see #Mashe(Adapter)
+     * @since 0.1.1
      */
     public Mashe(Adapter adapter, Consumer<String> logger) {
         setAdapter(adapter);
@@ -86,6 +89,7 @@ public final class Mashe {
      *
      * @see #register(Class, Priority, Consumer)
      * @see #register(Object)
+     * @since 0.1.0
      */
     public<T extends Event> void register(Class<T> object, Consumer<T> consumer) {
         register(object, Priority.LOW, consumer);
@@ -99,6 +103,7 @@ public final class Mashe {
      *
      * @see #register(Class, Consumer)
      * @see #register(Object)
+     * @since 0.1.0
      */
     @SuppressWarnings("unchecked") // We know that it's safe
     public<T extends Event> void register(Class<T> object, Priority priority, Consumer<T> consumer) {
@@ -115,6 +120,7 @@ public final class Mashe {
      *
      * @see #register(Class, Consumer)
      * @see #register(Class, Priority, Consumer)
+     * @since 0.1.0
      */
     public void register(Object subscriber) {
         MethodType factoryType = MethodType.methodType(Listener.class, subscriber.getClass());
@@ -157,6 +163,20 @@ public final class Mashe {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    /**
+     * @since 0.1.0
+     */
+    public<T extends Event> void unregister(Class<T> object) {
+        getAdapter().unregister(object);
+    }
+
+    /**
+     * @since 0.1.0
+     */
+    public<T extends Event> void unregister(Listener listener) {
+        getAdapter().unregister(listener);
     }
 
     /**

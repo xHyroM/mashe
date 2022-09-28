@@ -1,6 +1,6 @@
-package hyro.mashe.annotations;
+package hyro.mashetest.annotations;
 
-import hyro.mashe.enums.Priority;
+import hyro.mashetest.enums.Priority;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

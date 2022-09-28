@@ -5,9 +5,9 @@ Simple, fast, and easy to use Event Handling for Java.
 ## Usage
 
 ```java
-import hyro.mashe.Mashe;
-import hyro.mashe.types.Event;
-import hyro.mashe.annotations.Listen;
+import hyro.mashetest.Mashe;
+import hyro.mashetest.types.Event;
+import hyro.mashetest.annotations.Listen;
 
 public class Example {
     public static void main(String[] args) {

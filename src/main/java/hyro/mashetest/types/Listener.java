@@ -1,4 +1,4 @@
-package hyro.mashe.types;
+package hyro.mashetest.types;
 
 /**
  * @author <a href="https://github.com/xHyroM">xHyroM</a>

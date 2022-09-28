@@ -1,10 +1,8 @@
-package hyro.mashe.adapter;
+package hyro.mashetest.adapter;
 
-import hyro.mashe.types.Event;
-import hyro.mashe.enums.Priority;
-import hyro.mashe.types.Listener;
-
-import java.lang.reflect.Method;
+import hyro.mashetest.types.Event;
+import hyro.mashetest.enums.Priority;
+import hyro.mashetest.types.Listener;
 
 /**
  * Interface for Mashe adapters
@@ -21,6 +19,7 @@ public interface Adapter {
      * @param parameter main parameter - {@link Event}
      * @param listener {@link Listener}
      * @param priority {@link Priority}
+     * @since 0.1.0
      */
     void register(
             final Class<?> parameter,
@@ -29,7 +28,28 @@ public interface Adapter {
     );
 
     /**
+     * Implementation for unregistering event
+     *
+     * @param parameter main parameter - {@link Event}
+     * @since 0.1.3
+     */
+    void unregister(
+            final Class<?> parameter
+    );
+
+    /**
+     * Implementation for unregistering event
+     *
+     * @param listener your listener (consumer) - {@link Listener}
+     * @since 0.1.3
+     */
+    void unregister(
+            final Listener listener
+    );
+
+    /**
      * Implementation for sorting events by priority
+     * @since 0.1.0
      */
     default void sort() {
         // Function for sorting - not required
@@ -39,6 +59,7 @@ public interface Adapter {
      * Implementation for firing event
      *
      * @param event {@link Event}
+     * @since 0.1.0
      */
     void fire(final Event event);
 }

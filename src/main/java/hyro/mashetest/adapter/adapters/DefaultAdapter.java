@@ -1,10 +1,10 @@
-package hyro.mashe.adapter.adapters;
+package hyro.mashetest.adapter.adapters;
 
-import hyro.mashe.types.Event;
-import hyro.mashe.adapter.Adapter;
-import hyro.mashe.adapter.Data;
-import hyro.mashe.enums.Priority;
-import hyro.mashe.types.Listener;
+import hyro.mashetest.types.Event;
+import hyro.mashetest.adapter.Adapter;
+import hyro.mashetest.adapter.Data;
+import hyro.mashetest.enums.Priority;
+import hyro.mashetest.types.Listener;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,6 +27,22 @@ public final class DefaultAdapter implements Adapter {
         list.computeIfAbsent(parameter, k -> new ArrayList<>()).add(new Data(listener, priority));
 
         this.sort();
+    }
+
+    @Override
+    public void unregister(
+            final Class<?> parameter
+    ) {
+        list.remove(parameter);
+    }
+
+    @Override
+    public void unregister(
+            final Listener listener
+    ) {
+        for (ArrayList<Data> list : this.list.values()) {
+            list.removeIf(data -> data.getListener() == listener);
+        }
     }
 
     @Override

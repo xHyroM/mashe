@@ -1,10 +1,11 @@
-package hyro.mashe;
+package hyro.mashetest;
 
-import hyro.mashe.annotations.Listen;
-import hyro.mashe.events.TestEvent;
+import hyro.mashetest.annotations.Listen;
+import hyro.mashetest.events.TestEvent;
 
 public class TestMashe {
     public Mashe mashe;
+
     public TestMashe() {
         mashe = new Mashe();
         mashe.register(this);

@@ -1,11 +1,9 @@
-package hyro.mashe.adapter;
+package hyro.mashetest.adapter;
 
-import hyro.mashe.enums.Priority;
-import hyro.mashe.types.Listener;
+import hyro.mashetest.enums.Priority;
+import hyro.mashetest.types.Listener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.lang.reflect.Method;
 
 /**
  * Record for Adapter's storage
