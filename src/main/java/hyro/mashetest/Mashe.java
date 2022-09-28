@@ -166,14 +166,20 @@ public final class Mashe {
     }
 
     /**
-     * @since 0.1.0
+     * Unregister your event
+     *
+     * @param subscriber your class - {@link Class}
+     * @since 0.1.3
      */
-    public<T extends Event> void unregister(Class<T> object) {
-        getAdapter().unregister(object);
+    public<T extends Event> void unregister(Class<T> subscriber) {
+        getAdapter().unregister(subscriber);
     }
 
     /**
-     * @since 0.1.0
+     * Unregister your event
+     *
+     * @param listener main parameter - {@link Event}
+     * @since 0.1.3
      */
     public<T extends Event> void unregister(Listener listener) {
         getAdapter().unregister(listener);
