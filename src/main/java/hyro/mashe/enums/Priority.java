@@ -1,4 +1,4 @@
-package hyro.mashetest.enums;
+package hyro.mashe.enums;
 
 import lombok.Getter;
 

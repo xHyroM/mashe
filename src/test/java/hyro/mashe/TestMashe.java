@@ -1,7 +1,7 @@
-package hyro.mashetest;
+package hyro.mashe;
 
-import hyro.mashetest.annotations.Listen;
-import hyro.mashetest.events.TestEvent;
+import hyro.mashe.annotations.Listen;
+import hyro.mashe.events.TestEvent;
 
 public class TestMashe {
     public Mashe mashe;

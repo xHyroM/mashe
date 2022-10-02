@@ -1,4 +1,4 @@
-package hyro.mashetest.types;
+package hyro.mashe.types;
 
 import lombok.Getter;
 import lombok.Setter;

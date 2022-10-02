@@ -1,17 +1,17 @@
-package hyro.mashetest;
+package hyro.mashe;
 
-import hyro.mashetest.adapter.Adapter;
-import hyro.mashetest.adapter.adapters.DefaultAdapter;
-import hyro.mashetest.annotations.Listen;
-import hyro.mashetest.enums.Priority;
-import hyro.mashetest.types.Event;
-import hyro.mashetest.types.Listener;
+import hyro.mashe.adapter.Adapter;
+import hyro.mashe.adapter.adapters.DefaultAdapter;
+import hyro.mashe.annotations.Listen;
+import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Event;
+import hyro.mashe.types.Listener;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.lang.invoke.*;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.function.Consumer;
 
 /**
@@ -32,7 +32,7 @@ public final class Mashe {
     /**
      * Create Mashe
      * <p></p>
-     * If you have Eclipse Collections installed, it will use {@link hyro.mashetest.adapter.adapters.EclipseCollectionsAdapter}
+     * If you have Eclipse Collections installed, it will use {@link hyro.mashe.adapter.adapters.EclipseCollectionsAdapter}
      * <p>
      * otherwise it use {@link DefaultAdapter}
      * <p>
@@ -46,7 +46,7 @@ public final class Mashe {
         try {
             Class.forName("org.eclipse.collections.api.factory.Maps");
             setAdapter(
-                    ((Adapter) Class.forName("hyro.mashetest.adapter.adapters.EclipseCollectionsAdapter").getDeclaredConstructor().newInstance())
+                    ((Adapter) Class.forName("hyro.mashe.adapter.adapters.EclipseCollectionsAdapter").getDeclaredConstructor().newInstance())
             );
         } catch (Exception ignored) {
             setAdapter(new DefaultAdapter());
@@ -124,11 +124,6 @@ public final class Mashe {
      */
     public void register(Object subscriber) {
         MethodType factoryType = MethodType.methodType(Listener.class, subscriber.getClass());
-        if (!Modifier.isPublic(subscriber.getClass().getModifiers())) {
-            System.out.println(String.format("ERROR: %s: Class must be public or you can use Mashe#register(class, consumer).",
-                    subscriber.getClass().getSimpleName()));
-            return;
-        }
 
         for (Method method : subscriber.getClass().getDeclaredMethods()) {
             if (!method.isAnnotationPresent(Listen.class)) {
@@ -160,7 +155,22 @@ public final class Mashe {
 
                 getAdapter().register(parameterTypes[0], listener, info.priority());
             } catch (Throwable e) {
-                throw new RuntimeException(e);
+                this.logger.accept(String.format(
+                        "WARNING: %s: Can't use LambdaMetafactory for %s, switching to reflections",
+                        subscriber.getClass().getName(), method.getName()
+                ));
+                // Use reflections
+                method.setAccessible(true);
+
+                Listener listener = event -> {
+                    try {
+                        method.invoke(subscriber, event);
+                    } catch (InvocationTargetException | IllegalAccessException e1) {
+                        // nothing to do
+                    }
+                };
+
+                getAdapter().register(parameterTypes[0], listener, info.priority());
             }
         }
     }

@@ -1,8 +1,8 @@
-package hyro.mashetest.adapter;
+package hyro.mashe.adapter;
 
-import hyro.mashetest.types.Event;
-import hyro.mashetest.enums.Priority;
-import hyro.mashetest.types.Listener;
+import hyro.mashe.types.Event;
+import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Listener;
 
 /**
  * Interface for Mashe adapters

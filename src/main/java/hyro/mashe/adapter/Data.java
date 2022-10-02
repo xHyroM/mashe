@@ -1,7 +1,7 @@
-package hyro.mashetest.adapter;
+package hyro.mashe.adapter;
 
-import hyro.mashetest.enums.Priority;
-import hyro.mashetest.types.Listener;
+import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Listener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

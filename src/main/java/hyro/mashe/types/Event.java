@@ -1,7 +1,7 @@
-package hyro.mashetest.types;
+package hyro.mashe.types;
 
-import hyro.mashetest.Mashe;
-import hyro.mashetest.enums.Priority;
+import hyro.mashe.Mashe;
+import hyro.mashe.enums.Priority;
 
 import java.util.function.Consumer;
 
