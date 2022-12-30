@@ -31,7 +31,7 @@ public final class EclipseCollectionsAdapter implements Adapter {
 
     @Override
     public void unregister(
-            final Class<?> parameter
+            final Object parameter
     ) {
         list.remove(parameter);
     }

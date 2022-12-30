@@ -159,6 +159,7 @@ public final class Mashe {
                         "WARNING: %s: Can't use LambdaMetafactory for %s, switching to reflections",
                         subscriber.getClass().getName(), method.getName()
                 ));
+
                 // Use reflections
                 method.setAccessible(true);
 
@@ -178,10 +179,10 @@ public final class Mashe {
     /**
      * Unregister your event
      *
-     * @param subscriber your class - {@link Class}
+     * @param subscriber your class - {@link Object}
      * @since 0.1.3
      */
-    public<T extends Event> void unregister(Class<T> subscriber) {
+    public void unregister(Object subscriber) {
         getAdapter().unregister(subscriber);
     }
 

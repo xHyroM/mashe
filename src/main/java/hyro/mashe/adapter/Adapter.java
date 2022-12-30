@@ -34,7 +34,7 @@ public interface Adapter {
      * @since 0.1.3
      */
     void unregister(
-            final Class<?> parameter
+            final Object parameter
     );
 
     /**
