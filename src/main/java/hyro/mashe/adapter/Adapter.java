@@ -1,7 +1,7 @@
 package hyro.mashe.adapter;
 
-import hyro.mashe.types.Event;
 import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Event;
 import hyro.mashe.types.Listener;
 
 /**
@@ -24,7 +24,8 @@ public interface Adapter {
     void register(
             final Class<?> parameter,
             final Listener listener,
-            final Priority priority
+            final Priority priority,
+            final Object object
     );
 
     /**
