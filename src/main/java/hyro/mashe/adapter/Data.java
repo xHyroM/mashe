@@ -4,6 +4,7 @@ import hyro.mashe.enums.Priority;
 import hyro.mashe.types.Listener;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Record for Adapter's storage
@@ -19,7 +20,9 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
+@ToString
 public final class Data {
     private final Listener listener;
     private final Priority priority;
+    private final Object subscriber;
 }

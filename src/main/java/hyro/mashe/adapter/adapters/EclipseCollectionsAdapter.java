@@ -1,9 +1,9 @@
 package hyro.mashe.adapter.adapters;
 
-import hyro.mashe.types.Event;
 import hyro.mashe.adapter.Adapter;
 import hyro.mashe.adapter.Data;
 import hyro.mashe.enums.Priority;
+import hyro.mashe.types.Event;
 import hyro.mashe.types.Listener;
 import org.eclipse.collections.impl.list.mutable.FastList;
 import org.eclipse.collections.impl.map.mutable.UnifiedMap;
@@ -22,9 +22,10 @@ public final class EclipseCollectionsAdapter implements Adapter {
     public void register(
             final Class<?> parameter,
             final Listener listener,
-            final Priority priority
+            final Priority priority,
+            final Object object
     ) {
-        list.computeIfAbsent(parameter, k -> new FastList<>()).add(new Data(listener, priority));
+        list.computeIfAbsent(parameter, k -> new FastList<>()).add(new Data(listener, priority, object));
 
         this.sort();
     }
@@ -33,7 +34,9 @@ public final class EclipseCollectionsAdapter implements Adapter {
     public void unregister(
             final Object parameter
     ) {
-        list.remove(parameter);
+        for (FastList<Data> list : this.list.values()) {
+            list.removeIf(data -> data.getSubscriber().equals(parameter));
+        }
     }
 
     @Override

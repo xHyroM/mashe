@@ -110,7 +110,8 @@ public final class Mashe {
         getAdapter().register(
                 object,
                 event -> consumer.accept((T) event),
-                priority
+                priority,
+                consumer
         );
     }
 
@@ -153,7 +154,7 @@ public final class Mashe {
 
                 Listener listener = (Listener) site.getTarget().invoke(subscriber);
 
-                getAdapter().register(parameterTypes[0], listener, info.priority());
+                getAdapter().register(parameterTypes[0], listener, info.priority(), subscriber);
             } catch (Throwable e) {
                 this.logger.accept(String.format(
                         "WARNING: %s: Can't use LambdaMetafactory for %s, switching to reflections",
@@ -171,7 +172,7 @@ public final class Mashe {
                     }
                 };
 
-                getAdapter().register(parameterTypes[0], listener, info.priority());
+                getAdapter().register(parameterTypes[0], listener, info.priority(), subscriber);
             }
         }
     }
